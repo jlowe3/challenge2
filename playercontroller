@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playercontroller1 : MonoBehaviour
 {
 
     private Rigidbody2D rb2d;
     private bool facingRight = true;
+    private int count;
 
     public float speed;
     public float jumpforce;
+    public Text countText;
+    public Text WinText; 
 
     //ground check
     private bool isOnGround;
@@ -30,7 +34,9 @@ public class playercontroller1 : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-
+        count = 0;
+        SetCountText();
+        WinText.text = "";
     }
 
     void Awake()
@@ -112,6 +118,17 @@ public class playercontroller1 : MonoBehaviour
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
+            count = count + 1;
+            SetCountText ();
+        }
+    }
+
+    void SetCountText()
+    {
+        countText.text = "Count: " + count.ToString();
+        if (count >= 5)
+        {
+            WinText.text = "You win!";
         }
     }
 
